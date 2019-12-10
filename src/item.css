@@ -1,0 +1,48 @@
+.list{
+  margin-top: 10%;
+  border-radius: 4px;
+}
+.item {
+  margin: 15px;
+  padding: 5px;
+  border: 1px solid #265728;
+
+  display: flex;
+  justify-content: space-between;
+}
+.item-element{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.item-button{
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 100%;
+  border-radius: 4px;
+}
+.add-form{
+  display: flex;
+  flex-direction: column;
+}
+.add-item{
+  min-width: 160px;
+  font-size: 17px;
+  background-color: unset;
+  padding: 12px;
+  border-radius: 4px;
+  width: 56%;
+  margin: 0 auto;
+  margin-bottom: 80px;
+  border-color: #265728;
+}
+.add-input{
+  min-width: 160px;
+  font-size: 17px;
+  background-color: unset;
+  padding: 12px;
+  border-radius: 4px;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  border: 1px solid #265728;
+}
