@@ -1,35 +1,53 @@
 import React, {useEffect, useState} from 'react';
-import { firestore } from './firebase';
+import { firestore, auth } from '../firebase';
+import { useHistory } from "react-router-dom";
+
 import './item.css'
 
 const Item = () => {
   const [itemlist, setItemList] = useState([]);
   const [itemInput, setItemInput] = useState('');
-  async function fetchItems(){
-    // Get only once
-    // const snapshot = await firestore.collection('items').get();
-    // const items = (snapshot.docs.map(doc => { 
-    //   return { 
-    //     id: doc.id, ...doc.data()
-    //   }
-    // }));
-    // setItemList(items);
+  let history = useHistory();
+  // async function fetchItems(){
+  //   // Get only once
+  //   // const snapshot = await firestore.collection('items').get();
+  //   // const items = (snapshot.docs.map(doc => { 
+  //   //   return { 
+  //   //     id: doc.id, ...doc.data()
+  //   //   }
+  //   // }));
+  //   // setItemList(items);
 
-    // Update with snapshot
-    const unsubscribe = firestore.collection('items').onSnapshot(snapsopt => {
-    const items = snapsopt.docs.map(doc => { 
-        return { 
-          id: doc.id, ...doc.data()
-        }
-    });
-    setItemList(items);
-    return unsubscribe;
-  })}
+  //   // Update with snapshot, HAVE TO RETURN UNSUBSCRIBE AND THEN ISE IT IN USEFFECT
+  //   const unsubscribe = firestore.collection('items').onSnapshot(snapsopt => {
+  //   const items = snapsopt.docs.map(doc => { 
+  //       return { 
+  //         id: doc.id, ...doc.data()
+  //       }
+  //   });
+  //   setItemList(items);    
+  //   return unsubscribe;
+  // })}
 
   useEffect(() => {
-    const unsubscribe = fetchItems();
-    return () => unsubscribe();
-  },[]);
+    auth.onAuthStateChanged(function(user) {
+      if (!user) {
+        history.push("/login");
+      }
+    });
+    // Fetch items on Snapshot Update
+    const unsubscribe = firestore.collection('items').onSnapshot(snapsopt => {
+      const items = snapsopt.docs.map(doc => { 
+          return { 
+            id: doc.id, ...doc.data()
+          }
+      });
+      setItemList(items);    
+    });
+
+    //Clean everything
+   return () => unsubscribe();
+  },[history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,9 +72,9 @@ const Item = () => {
   const handleCompleted = (id) => {
     firestore.doc(`items/${id}`).update({isCompleted: true});
   }
-  console.log(itemlist.filter((item) => item.isCompleted));
+
   return (
-  <div>
+  <div className="list-box">
     <div className="list">
       <h2>To DO Stuff</h2>
        {

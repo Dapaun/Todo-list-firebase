@@ -5,3 +5,10 @@
   justify-content: center;
 }
 
+.navBar {
+  background-color: rgb(242, 242, 242);
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
