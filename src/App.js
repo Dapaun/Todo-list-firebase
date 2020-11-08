@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { auth } from './firebase';
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Redirect,
 } from "react-router-dom";
 import Item from './itemList/Item';
 import Login from './login/Login';
@@ -30,7 +31,7 @@ const App = () => {
     <div>
        <div className="navBar">
         <p>Go Home</p>
-        <p onClick={handleSignOut}>Sign Out</p>
+        {isLoggedIn && <p onClick={handleSignOut}>Sign Out</p> }
       </div>
       <div className="App">
       <Router>
@@ -43,6 +44,7 @@ const App = () => {
         <Route exact path="/signUp">
           <SignUp/>
         </Route>
+        <Redirect exact from="/" to="/itemList" />
       </Router>
       </div>
     </div>

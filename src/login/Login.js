@@ -34,6 +34,7 @@ const Login = ({logged}) => {
 
   return (
   <div className="formWrapper">
+    <h1>Welcome to my firebase todo list</h1>
     <h2>Sign in with email ?</h2>
     <form className="signInForm" onSubmit={handleSubmit}>
       <input placeholder="Enter Email Here" type="text" name="email"/>
